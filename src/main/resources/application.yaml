@@ -1,0 +1,71 @@
+server:
+  port: 8080
+
+spring:
+  datasource:
+    url: jdbc:h2:mem:metricsdb
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.H2Dialect
+        format_sql: true
+        use_sql_comments: true
+    show-sql: false
+  sql:
+    init:
+      mode: always
+      schema-locations: classpath:schema-h2.sql
+      data-locations: classpath:data-fill-h2.sql
+  data:
+    redis:
+      host: localhost
+      port: 6379
+      timeout: 2000
+      lettuce:
+        pool:
+          max-active: 8
+          max-idle: 8
+          min-idle: 0
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+  aop:
+    proxy-target-class: true
+
+# JWT
+jwt:
+  secret: IFgRGNssNRnq2/EpSGy6iqrzEORQKu4/z91OOqeZG2A=
+  expiration: 3600000
+
+# Rate limiting
+rate-limit:
+  metrics-endpoint:
+    max-requests-per-client: 10
+    global-max-requests: 1000
+    time-window-seconds: 1
+    ip-based: false
+  auth-endpoint:
+    max-requests-per-client: 5
+    global-max-requests: 0
+    time-window-seconds: 60
+    ip-based: true
+
+# Logging
+logging:
+  level:
+    root: INFO
+    org.springframework.web: DEBUG
+    org.springframework.security: DEBUG
+    com.mtp.metricsservice: DEBUG
+    org.aspectj: TRACE
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} - %-5level [%thread] %logger{36} - %msg%n"
