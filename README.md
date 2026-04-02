@@ -4,7 +4,7 @@ REST-сервис для приема, хранения и агрегации м
 
 ## Технологический стек
 *   **Java 21** (LTS)
-*   **Spring Boot 3.5.13**
+*   **Spring Boot 3.4.3**
 *   **Spring Data JPA** (хранение метрик)
 *   **Spring Security + JJWT** (авторизация)
 *   **Spring AOP** (реализация Rate Limiting через аспекты)
@@ -60,9 +60,10 @@ mvn clean package
 ### Запуск через Docker Compose
 Запуск приложения вместе с Redis (БД H2 запустится внутри приложения):
 docker-compose up --build -d
-
+* **Примечание:** В Windows можно столкнуться с проблемой, не видит Dockerfile. 
+* **Решение:** Запуск командой: docker build -t metrics-service-app -f Dockerfile .
 *   **Приложение**: http://localhost:8080
-*   **H2 Console**: http://localhost:8080/h2-console (JDBC URL: jdbc:h2:mem:metricsdb, User: sa, Pass: пустой)
+*   **H2 Console**: http://localhost:8080/h2-console (JDBC URL: jdbc:h2:mem:metricsdb, User: admin, Pass: пустой)
 
 ---
 

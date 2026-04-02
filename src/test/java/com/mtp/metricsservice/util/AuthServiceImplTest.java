@@ -23,13 +23,16 @@ class AuthServiceImplTest {
 
     @Test
     void testAuthenticateClient_ValidClientId_ReturnsToken() {
-        String clientId = "valid-client";
+        String clientId = "client-12345";
         String expectedToken = "mock-jwt-token";
+
         when(jwtUtil.generateToken(clientId)).thenReturn(expectedToken);
+
         String actualToken = authService.authenticateClient(clientId);
 
         assertThat(actualToken).isEqualTo(expectedToken);
     }
+
 
     @Test
     void testAuthenticateClient_EmptyClientId_ThrowsException() {
